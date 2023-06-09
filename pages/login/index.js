@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { GetLoginAuth } from '../../api/Auth';
 import styles from '../../styles/Home.module.css';
 import LoginModal from '../../components/modals/loginModal/loginModal';
 
@@ -16,9 +17,18 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit = (data) => {
-    setIsModalOpen(true);
-    console.log(data);
+   // setIsModalOpen(true);
+    LoginUser(data)
   };
+
+  const LoginUser = async (userData) => {
+    try{
+      const result = await GetLoginAuth(userData);
+      console.log(result)
+    } catch (error) {
+      console.log("Error happened: ", error.response.data.message)
+    }
+  }
 
   const handleInputedUserEmail = (event) => {
     setValue("email", event.target.value)
@@ -57,7 +67,7 @@ export default function Home() {
           </Form.Item>
 
             <a href="#" rel="noopener noreferrer">
-                Don't have an account? Create one here!
+                Don't have an account? Create one here! (BETA)
             </a>
 
           <Form.Item>

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import LoginSession from '../_app';
 
- const Home = () => {
+ const ComercialHomePage = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -81,4 +81,4 @@ import LoginSession from '../_app';
   )
 }
 
-export default LoginSession(Home);
+export default LoginSession(ComercialHomePage);
