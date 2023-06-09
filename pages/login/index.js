@@ -1,7 +1,33 @@
 import Head from 'next/head';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import styles from '../../styles/Home.module.css';
+import LoginModal from '../../components/modals/loginModal/loginModal';
+
+import { 
+  Form, 
+  Input, 
+  Button 
+} from 'antd';
 
 export default function Home() {
+  const { handleSubmit, setValue } = useForm();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const onSubmit = (data) => {
+    setIsModalOpen(true);
+    console.log(data);
+  };
+
+  const handleInputedUserEmail = (event) => {
+    setValue("email", event.target.value)
+  }
+
+  const handleInputedUserPassword = (event) => {
+    setValue("password", event.target.value)
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,18 +37,45 @@ export default function Home() {
 
       <main>
         <h1 className={styles.title}>
-          Login Page
+          Please Enter Your Credentials
         </h1>
+
+        <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+          <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please enter your email' }]}>
+            <Input
+                type="email"
+                placeholder="Email"
+                onChange={handleInputedUserEmail}
+              />
+          </Form.Item>
+          <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter your password' }]}>
+            <Input 
+              type="password" 
+              placeholder="Password" 
+              onChange={handleInputedUserPassword}
+            />
+          </Form.Item>
+
+            <a href="#" rel="noopener noreferrer">
+                Don't have an account? Create one here!
+            </a>
+
+          <Form.Item>
+            <Button style={{backgroundColor:"green", width:"100%"}} type="primary" htmlType="submit">Login</Button>
+          </Form.Item>
+        </Form>
+
       </main>
+
+      <LoginModal isopen={isModalOpen}></LoginModal>
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://www.linkedin.com/in/vinicius-mocci/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
+          Powered by{' '} Vinicius Mocci
         </a>
       </footer>
 

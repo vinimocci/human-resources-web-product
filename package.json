@@ -6,9 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
-    "antd": "^5.5.2",
+    "@ant-design/icons": "^5.1.4",
+    "antd": "^5.6.1",
     "next": "latest",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.44.3",
+    "sass": "^1.63.2"
   }
 }
