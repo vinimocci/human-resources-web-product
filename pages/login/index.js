@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GetLoginAuth } from '../../api/Auth';
 import styles from '../../styles/Home.module.css';
-import LoginModal from '../../components/modals/loginModal/loginModal';
+import LoginModal from '../../components/modals/loginModal/LoginModal';
+import RequestErrorModal from '../../components/modals/requestErrorModal/RequestErrorModal';
 
 import { 
   Form, 
@@ -13,22 +14,29 @@ import {
 
 export default function Home() {
   const { handleSubmit, setValue } = useForm();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Make a better value assignment on the default value for this modalErrorMessage useState -- @vinicius.mocci
+  const [modalErrorMessage, setModalErrorMessage] = useState('');
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
   const onSubmit = (data) => {
-   // setIsModalOpen(true);
     LoginUser(data)
   };
 
   const LoginUser = async (userData) => {
     try{
       const result = await GetLoginAuth(userData);
+      // Insert sucessfull login logic here -- @vinicius.mocci
       console.log(result)
     } catch (error) {
-      console.log("Error happened: ", error.response.data.message)
+      setModalErrorMessage(error.response.data.message)
+      setIsErrorModalOpen(true)
     }
   }
+
+  const handleModalClose = () => {
+    setIsErrorModalOpen(false);
+  };
 
   const handleInputedUserEmail = (event) => {
     setValue("email", event.target.value)
@@ -78,6 +86,12 @@ export default function Home() {
       </main>
 
       <LoginModal isopen={isModalOpen}></LoginModal>
+
+      <RequestErrorModal 
+        isopen={isErrorModalOpen} 
+        errorMessage={modalErrorMessage} 
+        onClose={handleModalClose}
+      />
 
       <footer>
         <a

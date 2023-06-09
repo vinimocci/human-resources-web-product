@@ -1,0 +1,15 @@
+.requestErrorModalComponent{
+    display: flex;
+    height: 20vh; 
+    font-size: large;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.requestErrorButton{
+    margin: auto;
+    display: flex;
+    background-color: green;
+}
