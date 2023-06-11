@@ -1,23 +1,42 @@
-import Head from 'next/head';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { GetLoginAuth } from '../../api/Auth';
-import styles from '../../styles/Home.module.css';
-import LoginModal from '../../components/modals/loginModal/LoginModal';
-import RequestErrorModal from '../../components/modals/requestErrorModal/RequestErrorModal';
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import styles from './Login.module.scss'
+import { useForm } from 'react-hook-form'
+import { GetLoginAuth } from '../../api/Auth'
+import {EmptyMessage} from '../../utils/Consts'
+import { LoadingOutlined } from '@ant-design/icons'
+import LoginModal from '../../components/modals/loginModal/LoginModal'
+import RequestErrorModal from '../../components/modals/requestErrorModal/RequestErrorModal'
+
+import 
+React, 
+{ useState, 
+  useEffect 
+} from 'react'
 
 import { 
   Form, 
   Input, 
   Button 
-} from 'antd';
+} from 'antd'
 
 export default function Home() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const { handleSubmit, setValue } = useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Make a better value assignment on the default value for this modalErrorMessage useState -- @vinicius.mocci
-  const [modalErrorMessage, setModalErrorMessage] = useState('');
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [modalErrorMessage, setModalErrorMessage] = useState(EmptyMessage);
+
+  useEffect(() => {
+    const email = localStorage.getItem('userEmail');
+  
+      if (email) {
+        router.push('/home');
+      }else{
+        setLoading(false)
+      } 
+  }, []);
 
   const onSubmit = (data) => {
     LoginUser(data)
@@ -26,12 +45,18 @@ export default function Home() {
   const LoginUser = async (userData) => {
     try{
       const result = await GetLoginAuth(userData);
-      // Insert sucessfull login logic here -- @vinicius.mocci
-      console.log(result)
+
+      setUserDataOnSession(result.message.id, result.message.email)
+      setIsModalOpen(true)
     } catch (error) {
       setModalErrorMessage(error.response.data.message)
       setIsErrorModalOpen(true)
     }
+  }
+
+  const setUserDataOnSession = (userID, userEmail) => {
+    localStorage.setItem('userID', userID);
+    localStorage.setItem('userEmail', userEmail);
   }
 
   const handleModalClose = () => {
@@ -44,6 +69,10 @@ export default function Home() {
 
   const handleInputedUserPassword = (event) => {
     setValue("password", event.target.value)
+  }
+
+  if (loading) {
+    return <div className={styles.loadingComponent}> <LoadingOutlined style={{color:"green", fontSize:"100px"}} /></div>;
   }
 
   return (

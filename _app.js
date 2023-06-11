@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { debounce } from 'lodash';
-import { useRouter } from 'next/router';
-import { LoadingOutlined } from '@ant-design/icons';
+import { debounce } from 'lodash'
+import { useRouter } from 'next/router'
+import styles from './styles/Home.module.css'
+import { LoadingOutlined } from '@ant-design/icons'
+
+import 
+React, 
+{ 
+  useEffect, 
+  useState 
+} from 'react'
 
 const LoginSession = (WrappedComponent) => {
 
@@ -10,7 +17,7 @@ const LoginSession = (WrappedComponent) => {
     const [loading, setLoading] = useState(true);
 
     const checkEmailInLocalStorage = debounce(async () => {
-      const email = localStorage.getItem('email');
+      const email = localStorage.getItem('userEmail');
   
       if (!email) {
         router.push('/login');
@@ -24,7 +31,7 @@ const LoginSession = (WrappedComponent) => {
     }, []);
 
     if (loading) {
-      return <div> <LoadingOutlined style={{color:"green", fontSize:"100px"}} /></div>;
+      return <div className={styles.loadingComponent}> <LoadingOutlined style={{color:"green", fontSize:"100px"}} /></div>;
     }
 
     return <WrappedComponent {...props} />;
