@@ -2,7 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import LoginSession from '../_app';
 
- const Home = () => {
+ const ComercialHomePage = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -18,12 +18,11 @@ import LoginSession from '../_app';
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://www.linkedin.com/in/vinicius-mocci/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
+          Powered by{' '} Vinicius Mocci
         </a>
       </footer>
 
@@ -81,4 +80,4 @@ import LoginSession from '../_app';
   )
 }
 
-export default LoginSession(Home);
+export default LoginSession(ComercialHomePage);

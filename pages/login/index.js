@@ -1,7 +1,80 @@
-import Head from 'next/head';
-import styles from '../../styles/Home.module.css';
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import styles from './Login.module.scss'
+import { useForm } from 'react-hook-form'
+import { GetLoginAuth } from '../../api/Auth'
+import {EmptyMessage} from '../../utils/Consts'
+import { LoadingOutlined } from '@ant-design/icons'
+import LoginModal from '../../components/modals/loginModal/LoginModal'
+import RequestErrorModal from '../../components/modals/requestErrorModal/RequestErrorModal'
+
+import 
+React, 
+{ useState, 
+  useEffect 
+} from 'react'
+
+import { 
+  Form, 
+  Input, 
+  Button 
+} from 'antd'
 
 export default function Home() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const { handleSubmit, setValue } = useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [modalErrorMessage, setModalErrorMessage] = useState(EmptyMessage);
+
+  useEffect(() => {
+    const email = localStorage.getItem('userEmail');
+  
+      if (email) {
+        router.push('/home');
+      }else{
+        setLoading(false)
+      } 
+  }, []);
+
+  const onSubmit = (data) => {
+    LoginUser(data)
+  };
+
+  const LoginUser = async (userData) => {
+    try{
+      const result = await GetLoginAuth(userData);
+
+      setUserDataOnSession(result.message.id, result.message.email)
+      setIsModalOpen(true)
+    } catch (error) {
+      setModalErrorMessage(error.response.data.message)
+      setIsErrorModalOpen(true)
+    }
+  }
+
+  const setUserDataOnSession = (userID, userEmail) => {
+    localStorage.setItem('userID', userID);
+    localStorage.setItem('userEmail', userEmail);
+  }
+
+  const handleModalClose = () => {
+    setIsErrorModalOpen(false);
+  };
+
+  const handleInputedUserEmail = (event) => {
+    setValue("email", event.target.value)
+  }
+
+  const handleInputedUserPassword = (event) => {
+    setValue("password", event.target.value)
+  }
+
+  if (loading) {
+    return <div className={styles.loadingComponent}> <LoadingOutlined style={{color:"green", fontSize:"100px"}} /></div>;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,18 +84,51 @@ export default function Home() {
 
       <main>
         <h1 className={styles.title}>
-          Login Page
+          Please Enter Your Credentials
         </h1>
+
+        <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+          <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please enter your email' }]}>
+            <Input
+                type="email"
+                placeholder="Email"
+                onChange={handleInputedUserEmail}
+              />
+          </Form.Item>
+          <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter your password' }]}>
+            <Input 
+              type="password" 
+              placeholder="Password" 
+              onChange={handleInputedUserPassword}
+            />
+          </Form.Item>
+
+            <a href="#" rel="noopener noreferrer">
+                Don't have an account? Create one here! (BETA)
+            </a>
+
+          <Form.Item>
+            <Button style={{backgroundColor:"green", width:"100%"}} type="primary" htmlType="submit">Login</Button>
+          </Form.Item>
+        </Form>
+
       </main>
+
+      <LoginModal isopen={isModalOpen}></LoginModal>
+
+      <RequestErrorModal 
+        isopen={isErrorModalOpen} 
+        errorMessage={modalErrorMessage} 
+        onClose={handleModalClose}
+      />
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://www.linkedin.com/in/vinicius-mocci/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
+          Powered by{' '} Vinicius Mocci
         </a>
       </footer>
 
