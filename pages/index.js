@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import LoginSession from '../_app';
+import SessionWrap from '../_app';
 
  const ComercialHomePage = () => {
   return (
@@ -15,16 +15,6 @@ import LoginSession from '../_app';
           Initial Page
         </h1>
       </main>
-
-      <footer>
-        <a
-          href="https://www.linkedin.com/in/vinicius-mocci/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '} Vinicius Mocci
-        </a>
-      </footer>
 
       <style jsx>{`
         main {
@@ -80,4 +70,4 @@ import LoginSession from '../_app';
   )
 }
 
-export default LoginSession(ComercialHomePage);
+export default SessionWrap(ComercialHomePage);

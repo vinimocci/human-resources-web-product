@@ -1,6 +1,6 @@
 import { debounce } from 'lodash'
 import { useRouter } from 'next/router'
-import styles from './styles/Home.module.css'
+import styles from './styles/Base.module.css'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import 
@@ -10,7 +10,7 @@ React,
   useState 
 } from 'react'
 
-const LoginSession = (WrappedComponent) => {
+const SessionWrap = (WrappedComponent) => {
 
   const EnhancedComponent = (props) => {
     const router = useRouter();
@@ -34,10 +34,30 @@ const LoginSession = (WrappedComponent) => {
       return <div className={styles.loadingComponent}> <LoadingOutlined style={{color:"green", fontSize:"100px"}} /></div>;
     }
 
-    return <WrappedComponent {...props} />;
+    return (
+      <div className={styles.body}>
+        <header>
+          {/*insert the header here*/}
+        </header>
+
+        <main className={styles.main}>
+          <WrappedComponent {...props} />
+        </main>
+
+        <footer className={styles.footer}>
+          <a
+            href="https://www.linkedin.com/in/vinicius-mocci/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Powered by{' '} Vinicius Mocci
+          </a>
+        </footer>
+      </div>
+    ) ;
   };
 
   return EnhancedComponent;
 };
 
-export default LoginSession;
+export default SessionWrap;
