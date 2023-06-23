@@ -9,6 +9,7 @@ React,
   useEffect, 
   useState 
 } from 'react'
+import MainHeader from './components/header/MainHeader'
 
 const LoginSession = (WrappedComponent) => {
 
@@ -34,7 +35,12 @@ const LoginSession = (WrappedComponent) => {
       return <div className={styles.loadingComponent}> <LoadingOutlined style={{color:"green", fontSize:"100px"}} /></div>;
     }
 
-    return <WrappedComponent {...props} />;
+    return (
+      <div>
+        <MainHeader></MainHeader>
+        <WrappedComponent {...props} />
+      </div>
+     )
   };
 
   return EnhancedComponent;
