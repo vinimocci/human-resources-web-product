@@ -9,6 +9,7 @@ React,
   useEffect, 
   useState 
 } from 'react'
+import MainHeader from './components/header/MainHeader'
 
 const SessionWrap = (WrappedComponent) => {
 
@@ -37,7 +38,7 @@ const SessionWrap = (WrappedComponent) => {
     return (
       <div className={styles.body}>
         <header>
-          {/*insert the header here*/}
+          <MainHeader></MainHeader>
         </header>
 
         <main className={styles.main}>
