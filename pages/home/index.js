@@ -9,7 +9,7 @@ import {
 
 const Home = () => {
 
-  const [userFromKafka, setUserFromKafka] = useState('waiting...')
+  const [userFromKafka, setUserFromKafka] = useState('waiting for Kafka update...')
 
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:5023/getnotifications');
