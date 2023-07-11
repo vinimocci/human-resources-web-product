@@ -1,4 +1,4 @@
-This is a sample NextJS React application for a Human Resources company.
+This is a sample NextJS React application for Web Solutions products.
 
 If you want to test on your machine, do these following steps:
 
