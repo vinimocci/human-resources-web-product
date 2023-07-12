@@ -26,6 +26,11 @@ function MainHeader(){
                     </Link>
                 </Menu.Item>
                 <Menu.Item>
+                    <Link href="/kafkaproducer">
+                      <p>Interact with Kafka</p>
+                    </Link>
+                </Menu.Item>
+                <Menu.Item>
                     <Link href="/profile" onClick={LogoutUser}>
                       <p>logout</p>
                     </Link>

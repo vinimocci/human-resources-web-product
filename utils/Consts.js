@@ -15,4 +15,10 @@ export const DefaultUserData =
         "addresszipcode": ""
 }
 
+export const DefaultNotification = 
+{
+        "description": "",
+        "topic": ""
+}
+
 export const UserMusntEditInfo = true
