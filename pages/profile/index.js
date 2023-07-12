@@ -37,7 +37,6 @@ const Profile = () => {
             const result = await GetUserInfo(localStorage.userID);
             const data = result.message;
             setUserInfo(data);
-            console.log(data);
           } catch (error) {
             console.log(error);
           }
